@@ -61,7 +61,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
 		// Extract the payload from the message
 		Bundle extras = intent.getExtras();
-		if (extras != null)
+		if (extras != null  && !PushPlugin.isIntercomPush(extras))
 		{
 			// if we are in the foreground, just surface the payload, else post it to the statusbar
             if (PushPlugin.isInForeground()) {

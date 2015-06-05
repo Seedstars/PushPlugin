@@ -42,7 +42,7 @@ public class PushHandlerActivity extends Activity
 	{
 		Bundle extras = getIntent().getExtras();
 
-		if (extras != null)	{
+		if (extras != null && !PushPlugin.isIntercomPush(extras))	{
 			Bundle originalExtras = extras.getBundle("pushBundle");
             
             originalExtras.putBoolean("foreground", false);
