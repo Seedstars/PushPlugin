@@ -64,8 +64,8 @@
 		<source-file src="src/android/com/plugin/gcm/PushHandlerActivity.java" target-dir="src/com/plugin/gcm/" />
 		<source-file src="src/android/com/plugin/gcm/PushPlugin.java" target-dir="src/com/plugin/gcm/" />
 
-        <resource-file src="drawable/circle.png" target="res/drawable/circle.png"/>
-        <resource-file src="drawable/shape.png" target="res/drawable/shape.png"/>
+        <resource-file src="drawables/circle.png" target="res/drawable/circle.png"/>
+        <resource-file src="drawables/shape.png" target="res/drawable/shape.png"/>
 
         <framework src="com.android.support:support-v4:22.1.1" />
 	</platform>
