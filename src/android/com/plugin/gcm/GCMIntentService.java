@@ -30,6 +30,8 @@ import android.graphics.BitmapShader;
 import android.graphics.RectF;
 import android.graphics.Shader;
 
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 
 import com.google.android.gcm.GCMBaseIntentService;
 
