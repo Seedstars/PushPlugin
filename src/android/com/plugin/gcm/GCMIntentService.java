@@ -124,14 +124,8 @@ public class GCMIntentService extends GCMBaseIntentService {
 		Bundle extras = intent.getExtras();
 		if (extras != null  && !PushPlugin.isIntercomPush(extras))
 		{
-			// ApplicationInfo app = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-
-			ApplicationInfo app = getContext().getPackageManager().getApplicationInfo(getContext().getPackageName(), 0);
-			Bundle bundle = app.metaData;
-
-			String forceInForeground = bundle.getString("forceInForeground");
 			// if we are in the foreground, just surface the payload, else post it to the statusbar
-			if (PushPlugin.isInForeground() && forceInForeground == "N") {
+			if (PushPlugin.isInForeground() && !PushPlugin.forceInForeground) {
 				extras.putBoolean("foreground", true);
 				PushPlugin.sendExtras(extras);
 				// extras.putBoolean("foreground", false);

@@ -242,6 +242,16 @@ public class PushPlugin extends CordovaPlugin {
       return gForeground;
     }
 
+	public static boolean forceInForeground()
+	{
+		ApplicationInfo app = this.cordova.getActivity().getApplicationContext().getPackageManager().getApplicationInfo(this.cordova.getActivity().getApplicationContext().getPackageName(), 0);
+		Bundle bundle = app.metaData;
+
+		String forceInForeground = bundle.getString("forceInForeground");
+
+		return forceInForeground == "Y";
+	}
+
     public static boolean isActive()
     {
     	return gWebView != null;
