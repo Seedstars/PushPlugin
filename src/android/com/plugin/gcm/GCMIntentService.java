@@ -124,7 +124,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 		Bundle extras = intent.getExtras();
 		if (extras != null  && !PushPlugin.isIntercomPush(extras))
 		{
-			ApplicationInfo app = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+			ApplicationInfo app = context.getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
 			Bundle bundle = app.metaData;
 
 			String forceInForeground = bundle.getString("forceInForeground");
