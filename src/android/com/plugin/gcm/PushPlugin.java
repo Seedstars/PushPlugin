@@ -244,7 +244,7 @@ public class PushPlugin extends CordovaPlugin {
 
 	public static boolean forceInForeground()
 	{
-		ApplicationInfo app = this.cordova.getActivity().getApplicationContext().getPackageManager().getApplicationInfo(this.cordova.getActivity().getApplicationContext().getPackageName(), 0);
+		ApplicationInfo app = getApplicationContext().getPackageManager().getApplicationInfo(getApplicationContext().getPackageName(), 0);
 		Bundle bundle = app.metaData;
 
 		String forceInForeground = bundle.getString("forceInForeground");
