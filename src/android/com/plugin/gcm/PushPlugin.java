@@ -237,12 +237,7 @@ public class PushPlugin extends CordovaPlugin {
 		return null;
     }
 
-    public static boolean isInForeground()
-    {
-      return gForeground;
-    }
-
-	public static boolean forceInForeground()
+	public boolean forceInForeground()
 	{
 		ApplicationInfo app = getApplicationContext().getPackageManager().getApplicationInfo(getApplicationContext().getPackageName(), 0);
 		Bundle bundle = app.metaData;
@@ -251,6 +246,11 @@ public class PushPlugin extends CordovaPlugin {
 
 		return forceInForeground == "Y";
 	}
+
+    public static boolean isInForeground()
+    {
+      return gForeground;
+    }
 
     public static boolean isActive()
     {
