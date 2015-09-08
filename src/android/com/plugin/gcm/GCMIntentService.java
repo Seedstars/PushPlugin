@@ -124,7 +124,8 @@ public class GCMIntentService extends GCMBaseIntentService {
 		Bundle extras = intent.getExtras();
 		if (extras != null  && !PushPlugin.isIntercomPush(extras))
 		{
-			ApplicationInfo app = Context.getPackageManager().getApplicationInfo(Context.getPackageName(), PackageManager.GET_META_DATA);
+			Context overContext = GCMIntentService.this.cordova.getActivity().getApplicationContext();
+			ApplicationInfo app = overContext.getPackageManager().getApplicationInfo(overContext.getPackageName(), PackageManager.GET_META_DATA);
 			Bundle bundle = app.metaData;
 
 			String forceInForeground = bundle.getString("forceInForeground");
