@@ -27,7 +27,7 @@
 		<engine name="cordova" version=">=3.0.0" />
 	</engines>
 
-    <preference name="$FORCE_FOREGROUND"/>
+    <preference name="FORCE_FOREGROUND"/>
 
     <!-- android -->
 	<platform name="android">
