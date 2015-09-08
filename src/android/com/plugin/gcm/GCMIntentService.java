@@ -126,7 +126,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 		{
 			// ApplicationInfo app = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
 
-			ApplicationInfo app = getPackageManager().getApplicationInfo(getPackageName(), 0);
+			ApplicationInfo app = getContext().getPackageManager().getApplicationInfo(getContext().getPackageName(), 0);
 			Bundle bundle = app.metaData;
 
 			String forceInForeground = bundle.getString("forceInForeground");
