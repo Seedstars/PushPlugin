@@ -36,7 +36,7 @@ public class PushPlugin extends CordovaPlugin {
 	 * Gets the application context from cordova's main activity.
 	 * @return the application context
 	 */
-	private Context getApplicationContext() {
+	protected Context getApplicationContext() {
 		return this.cordova.getActivity().getApplicationContext();
 	}
 
@@ -236,16 +236,6 @@ public class PushPlugin extends CordovaPlugin {
 		}
 		return null;
     }
-
-	public boolean forceInForeground()
-	{
-		ApplicationInfo app = getApplicationContext().getPackageManager().getApplicationInfo(getApplicationContext().getPackageName(), 0);
-		Bundle bundle = app.metaData;
-
-		String forceInForeground = bundle.getString("forceInForeground");
-
-		return forceInForeground == "Y";
-	}
 
     public static boolean isInForeground()
     {
