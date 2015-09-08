@@ -27,7 +27,7 @@
 		<engine name="cordova" version=">=3.0.0" />
 	</engines>
 
-    <preference name="FORCEFOREGROUND"/>
+    <preference name="$FORCE_FOREGROUND"/>
 
     <!-- android -->
 	<platform name="android">
@@ -39,7 +39,7 @@
 		</config-file>
 
         <config-file target="AndroidManifest.xml" parent="application">
-            <meta-data android:name="forceInForeground" android:value="FORCEFOREGROUND"/>
+            <meta-data android:name="forceInForeground" android:value="$FORCE_FOREGROUND"/>
         </config-file>
 
 		<config-file target="AndroidManifest.xml" parent="/manifest">
