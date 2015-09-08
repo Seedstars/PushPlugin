@@ -124,12 +124,10 @@ public class GCMIntentService extends GCMBaseIntentService {
 		Bundle extras = intent.getExtras();
 		if (extras != null  && !PushPlugin.isIntercomPush(extras))
 		{
-			try {
-				ApplicationInfo app = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-				Bundle bundle = app.metaData;
-			} catch (PackageManager.NameNotFoundException e) {
-				e.printStackTrace();
-			}
+			// ApplicationInfo app = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+
+			ApplicationInfo app = getPackageManager().getApplicationInfo(getPackageName(), 0);
+			Bundle bundle = app.metaData;
 
 			String forceInForeground = bundle.getString("forceInForeground");
 			// if we are in the foreground, just surface the payload, else post it to the statusbar
@@ -202,9 +200,9 @@ public class GCMIntentService extends GCMBaseIntentService {
 
 		String message = extras.getString("message");
 		if (message != null) {
-			mBuilder.setContentText("hackish");
+			mBuilder.setContentText(message);
 		} else {
-			mBuilder.setContentText("<missing message content>");
+			mBuilder.setContentText("");
 		}
 
 		String msgcnt = extras.getString("msgcnt");
