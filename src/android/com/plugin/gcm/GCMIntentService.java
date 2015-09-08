@@ -124,9 +124,12 @@ public class GCMIntentService extends GCMBaseIntentService {
 		Bundle extras = intent.getExtras();
 		if (extras != null  && !PushPlugin.isIntercomPush(extras))
 		{
-			Context overContext = GCMIntentService.this.cordova.getActivity().getApplicationContext();
-			ApplicationInfo app = overContext.getPackageManager().getApplicationInfo(overContext.getPackageName(), PackageManager.GET_META_DATA);
-			Bundle bundle = app.metaData;
+			try {
+				ApplicationInfo app = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+				Bundle bundle = app.metaData;
+			} catch (PackageManager.NameNotFoundException e) {
+				e.printStackTrace();
+			}
 
 			String forceInForeground = bundle.getString("forceInForeground");
 			// if we are in the foreground, just surface the payload, else post it to the statusbar
