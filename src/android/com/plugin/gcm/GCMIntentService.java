@@ -30,10 +30,6 @@ import android.graphics.BitmapShader;
 import android.graphics.RectF;
 import android.graphics.Shader;
 
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-
 import com.google.android.gcm.GCMBaseIntentService;
 
 @SuppressLint("NewApi")
@@ -124,13 +120,8 @@ public class GCMIntentService extends GCMBaseIntentService {
 		Bundle extras = intent.getExtras();
 		if (extras != null  && !PushPlugin.isIntercomPush(extras))
 		{
-			ApplicationInfo app = PushPlugin.getApplicationContext().getPackageManager().getApplicationInfo(PushPlugin.getApplicationContext().getPackageName(), 0);
-			Bundle bundle = app.metaData;
-
-			String forceInForeground = bundle.getString("forceInForeground");
-
-			// if we are in the foreground, just surface the payload, else post it to the statusbar
-			if (PushPlugin.isInForeground() && forceInForeground == "N") {
+			// if we are in the foreground and not forced, just surface the payload, else post it to the statusbar
+			if (PushPlugin.isInForeground() && !PushPlugin.isForceInForeground()) {
 				extras.putBoolean("foreground", true);
 				PushPlugin.sendExtras(extras);
 				// extras.putBoolean("foreground", false);

@@ -13,6 +13,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+
 import java.util.Iterator;
 
 /**
@@ -30,7 +34,8 @@ public class PushPlugin extends CordovaPlugin {
 	private static String gECB;
 	private static String gSenderID;
 	private static Bundle gCachedExtras = null;
-    private static boolean gForeground = false;
+	private static boolean gForeground = false;
+	private static boolean forceInForeground = false;
 
 	/**
 	 * Gets the application context from cordova's main activity.
@@ -94,6 +99,23 @@ public class PushPlugin extends CordovaPlugin {
 			callbackContext.error("Invalid action : " + action);
 		}
 
+		try {
+			ApplicationInfo app = this.cordova.getActivity().getPackageManager().getApplicationInfo(this.cordova.getActivity().getPackageName(), PackageManager.GET_META_DATA);
+
+			Bundle bundle = app.metaData;
+
+			String isForceInForegroud = bundle.getString("forceInForeground");
+
+			if (isForceInForegroud.equals("Y")) {
+				forceInForeground = true;
+			} else {
+				forceInForeground = false;
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "Failed to load meta-data " + e.getMessage());
+			forceInForeground = false;
+		}
+
 		return result;
 	}
 
@@ -125,39 +147,39 @@ public class PushPlugin extends CordovaPlugin {
 		}
 	}
 
-    @Override
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-        super.initialize(cordova, webView);
-        gForeground = true;
-    }
+	@Override
+	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+		super.initialize(cordova, webView);
+		gForeground = true;
+	}
 
 	@Override
-    public void onPause(boolean multitasking) {
-        super.onPause(multitasking);
-        gForeground = false;
-        final NotificationManager notificationManager = (NotificationManager) cordova.getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancelAll();
-    }
+	public void onPause(boolean multitasking) {
+		super.onPause(multitasking);
+		gForeground = false;
+		final NotificationManager notificationManager = (NotificationManager) cordova.getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+		notificationManager.cancelAll();
+	}
 
-    @Override
-    public void onResume(boolean multitasking) {
-        super.onResume(multitasking);
-        gForeground = true;
-    }
+	@Override
+	public void onResume(boolean multitasking) {
+		super.onResume(multitasking);
+		gForeground = true;
+	}
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        gForeground = false;
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		gForeground = false;
 		gECB = null;
 		gWebView = null;
-    }
+	}
 
-    /*
+	/*
      * serializes a bundle to JSON.
      */
-    private static JSONObject convertBundleToJson(Bundle extras)
-    {
+	private static JSONObject convertBundleToJson(Bundle extras)
+	{
 		try
 		{
 			JSONObject json;
@@ -192,7 +214,7 @@ public class PushPlugin extends CordovaPlugin {
 					}
 
 					if ( value instanceof String ) {
-					// Try to figure out if the value is another JSON object
+						// Try to figure out if the value is another JSON object
 
 						String strValue = (String)value;
 						if (strValue.startsWith("{")) {
@@ -235,15 +257,20 @@ public class PushPlugin extends CordovaPlugin {
 			Log.e(TAG, "extrasToJSON: JSON exception");
 		}
 		return null;
-    }
+	}
 
-    public static boolean isInForeground()
-    {
-      return gForeground;
-    }
+	public static boolean isForceInForeground()
+	{
+		return forceInForeground;
+	}
 
-    public static boolean isActive()
-    {
-    	return gWebView != null;
-    }
+	public static boolean isInForeground()
+	{
+		return gForeground;
+	}
+
+	public static boolean isActive()
+	{
+		return gWebView != null;
+	}
 }
